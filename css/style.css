@@ -1,1 +1,1825 @@
+:root {
+  --tm-teal: #1f9aa0;
+  --tm-text: #3b4651;
+  --tm-muted: #9fa6b2;
+  --tm-bg: #f7f9fc;
+  --tm-border: #cfd4dd;
+  --radius-lg: 16px;
+}
 
+/* Global reset / base */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden]{display:none !important;}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    system-ui, sans-serif;
+  background: var(--tm-bg);
+  color: var(--tm-text);
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Screens */
+
+.screen {
+  display: none;
+  padding: 32px 24px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 430px;
+}
+
+.screen--active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* WELCOME STYLES */
+
+.welcome-logo img {
+  width: 96px;
+  height: auto;
+  margin-top: 72px;
+  margin-bottom: 32px;
+}
+
+.welcome-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+.welcome-tagline {
+  margin: 0 0 28px;
+  font-size: 14px;
+  color: var(--tm-muted);
+}
+
+.welcome-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Buttons */
+
+.btn {
+  font: inherit;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+/* Back Button */
+.link-back {
+  align-self: flex-start;
+  margin-top: 20px;
+  margin-bottom: 4px;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--tm-teal);
+  cursor: pointer;
+}
+
+/* White with teal outline */
+.btn-outline-teal {
+  background: #ffffff;
+  border: 1px solid var(--tm-teal);
+  color: var(--tm-teal);
+}
+
+/* Solid teal */
+.btn-teal {
+  background: var(--tm-teal);
+  color: #ffffff;
+}
+
+
+/* Teal pill (match danger pill shape) */
+.btn-teal-pill{
+  border-radius: 999px;
+  border: 1px solid var(--tm-teal);
+  background: var(--tm-teal);
+  color: #ffffff;
+}
+
+.btn-teal-pill:focus-visible,
+.btn-teal-pill:active{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 154, 160, 0.18);
+}
+
+/* Outline teal pill (match Select a New Program button scheme, but pill shape) */
+.btn-outline-teal-pill{
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid var(--tm-teal);
+  color: var(--tm-teal);
+}
+
+.btn-outline-teal-pill:focus-visible,
+.btn-outline-teal-pill:active{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 154, 160, 0.18);
+}
+
+/* Danger pill (match Reset Day / destructive actions) */
+.btn-danger-pill{
+  border-radius: 999px;
+  border: 1px solid rgba(255,107,107,0.35);
+  background: rgba(255,107,107,0.08);
+  color: #ff6b6b;
+}
+
+.btn-danger-pill:focus-visible,
+.btn-danger-pill:active{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,107,107,0.18);
+}
+
+
+
+/* Focus / active states */
+
+.btn-outline-teal:focus-visible,
+.btn-outline-teal:active,
+.btn-teal:focus-visible,
+.btn-teal:active {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 154, 160, 0.18);
+}
+
+/* Version label */
+
+.welcome-version {
+  margin-top: auto;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--tm-muted);
+}
+
+/* Hover effects (desktop only) */
+@media (hover: hover) {
+  .btn-outline-teal:hover {
+    background: rgba(31, 154, 160, 0.06);
+  }
+
+  .btn-teal:hover {
+    background: #188890;
+  }
+}
+
+/* Tap / active effects (mobile & desktop) */
+.btn-outline-teal:active {
+  background: rgba(31, 154, 160, 0.12);
+}
+
+.btn-teal:active {
+  background: #157c83;
+}
+
+/* Generic titles for inner screens */
+
+.screen-title {
+  align-self: flex-start;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 32px 0 4px;
+}
+/* Tweak spacing on Profile to match Program screen */
+#screen-profile .screen-title {
+  margin-top: 0;      /* slightly tighter than the default 4px */
+}
+
+/* Screens that have the centred logo + hamburger header */
+.screen.screen--with-header {
+  align-items: stretch; /* let header + text hug the top nicely */
+}
+
+/* Pull the title up closer to the logo when a header is present */
+.screen--with-header .screen-title {
+  margin-top: 0px;      /* was 32px globally */
+}
+
+/* Optional: tighten subtitle spacing too */
+.screen--with-header .screen-subtitle {
+  margin-top: 0;
+}
+.screen-subtitle {
+  align-self: flex-start;
+  font-size: 14px;
+  color: var(--tm-muted);
+  margin: 0 0 20px;
+}
+
+/* Card container for forms */
+
+.form-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px 18px 24px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Fields */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  color: var(--tm-muted);
+}
+
+.field input {
+  border-radius: 12px;
+  border: 1px solid var(--tm-border);
+  padding: 10px 12px;
+  font: inherit;
+  background: #fdfefe;
+}
+
+.field input:focus-visible {
+  outline: none;
+  border-color: var(--tm-teal);
+  box-shadow: 0 0 0 2px rgba(31, 154, 160, 0.12);
+}
+
+/* Small inline errors (used in phased features like Program Builder) */
+.tm-error {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #a51d2d;
+}
+
+/* Inline field (for BMI display) */
+
+.field-inline {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge-metric {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #edf2f7;
+  font-size: 13px;
+}
+
+/* Segmented controls */
+
+.segmented {
+  display: flex;
+  background: #edf1f7;
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.segmented-option {
+  flex: 1;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 10px;
+  color: var(--tm-text);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.segmented-option--active {
+  background: #ffffff;
+  color: var(--tm-teal);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+}
+
+/* Profile submit button */
+
+.profile-submit {
+  margin-top: 8px;
+  width: 100%;
+}
+
+/* Start vs 1RM choice screen */
+
+.choice-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 18px 20px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  margin-top: 16px;
+}
+
+.choice-title {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.choice-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--tm-muted);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* Program selection: custom programme cards (Continue / Edit / Delete) */
+.program-card-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.program-card-actions .btn-teal-pill,
+.program-card-actions .btn-outline-teal-pill,
+.program-card-actions .btn-danger-pill{
+  flex: 1;
+  padding: 12px 10px;
+  font-size: 14px;
+}
+
+/* Program selection: custom programme cards (Continue / Edit / Delete) */
+.program-card-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.program-card-actions .btn-teal-pill,
+.program-card-actions .btn-outline-teal-pill,
+.program-card-actions .btn-danger-pill{
+  flex: 1;
+  padding: 12px 10px;
+  font-size: 14px;
+}
+
+/* Program selection: custom programme cards (Continue / Edit / Delete) */
+.program-card-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.program-card-actions .btn-teal-pill,
+.program-card-actions .btn-outline-teal-pill,
+.program-card-actions .btn-danger-pill{
+  flex: 1;
+  padding: 12px 10px;
+  font-size: 14px;
+}
+
+/* Program selection: custom programme cards (Continue / Edit / Delete) */
+.program-card-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.program-card-actions .btn-teal-pill,
+.program-card-actions .btn-outline-teal-pill,
+.program-card-actions .btn-danger-pill{
+  flex: 1;
+  padding: 12px 10px;
+  font-size: 14px;
+}
+
+/* 1RM TEST SCREEN */
+
+.header-logo-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.header-logo-center img {
+  height: 28px;
+  width: auto;
+}
+
+.one-rm-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px 16px 18px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.one-rm-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 1RM card header: title (left) + equipment pills (right) */
+.one-rm-header-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.one-rm-header-row .one-rm-title{
+  margin: 0;
+}
+
+.one-rm-equip{
+  justify-content: flex-end;
+}
+
+.one-rm-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.one-rm-fields > .field {
+  min-width: 0;
+}
+
+.one-rm-fields input {
+  width: 100%;
+  min-width: 0;
+}
+
+.one-rm-result {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--tm-muted);
+}
+
+.one-rm-result-value {
+  font-weight: 600;
+  color: var(--tm-teal);
+  margin-left: 4px;
+}
+
+/* WORKOUT SCREEN */
+
+.header-logo-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.header-logo-center img {
+  height: 28px;
+  width: auto;
+}
+
+
+.workout-header {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto 8px;
+  padding: 12px 16px 0;
+  position: relative;
+  z-index: 0; /* enables ::before behind text without escaping stacking context */
+  display: flex;
+  justify-content: center;   /* centre logo */
+  align-items: center;
+}
+/* Fix spacing only on profile page */
+#screen-profile .workout-header {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#screen-profile .screen-title {
+  margin-top: 6px !important;
+}
+
+/* Centered TrackMate logo for multiple screens */
+.header-logo-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.header-logo-center img {
+  height: 28px;
+  width: auto;
+}
+
+/* Hamburger menu button in top-right */
+.workout-menu-button {
+  border: none;
+  background: none;
+  padding: 4px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 3px;
+  cursor: pointer;
+  position: absolute;
+  right: 16px;
+  top: 12px;
+}
+
+.workout-menu-button span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: #4b5563; /* dark grey */
+}
+
+/* Week tabs */
+
+.week-tabs {
+  width: 100%;
+  max-width: 430px;
+  margin: 4px auto 8px;
+  display: flex;
+  gap: 12px;
+  padding: 0 4px 4px;
+  overflow-x: auto;
+}
+
+.week-tab {
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  padding: 6px 0;
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  color: var(--tm-text);
+}
+
+.week-tab--active {
+  font-weight: 600;
+}
+
+.week-tab--active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--tm-teal);
+}
+
+
+
+
+
+/* v2.7.1 – Week selector active pill (compact, low-profile, no layout shift)
+   - Applies wherever .week-tab--active is used (Sklar + Custom)
+   - Uses an inset-stroked, pale teal "tag" behind the label (no padding/size change)
+*/
+.week-tab--active{
+  font-weight: 600;
+  color: var(--tm-teal);
+}
+
+/* Pill background rendered via an absolutely-positioned pseudo-element
+   so the selector row height/spacing does not change. */
+.week-tab--active::before{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  /* Extend slightly past text so it never touches the “W” or the number */
+  left: -4px;
+  right: -4px;
+
+  /* Keep low-profile (label-style) */
+  top: 2px;
+  bottom: 2px;
+
+  border-radius: 999px;
+  background: rgba(31, 154, 160, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(31, 154, 160, 0.35);
+}
+
+/* Remove any underline/indicator bar previously used to mark the active week */
+.week-tab--active::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* v2.6.0 – Week selector mobile tightening (Weeks 1–6) */
+@media (max-width: 480px) {
+  .week-tabs {
+    max-width: 100%;
+    gap: 4px;               /* tighten spacing between weeks */
+    padding: 0 2px 2px;     /* reduce horizontal padding */
+    overflow-x: hidden;     /* no horizontal scrolling */
+    justify-content: space-between;
+  }
+
+  .week-tab {
+    font-size: 11px;        /* mobile-only font reduction */
+    padding: 6px 0;         /* keep tap height usable; no extra horizontal padding */
+    min-width: 0;           /* allow flex children to shrink */
+    flex: 1 1 0;            /* distribute evenly so all 6 fit */
+    text-align: center;
+  }
+
+  /* Ensure active week does not enlarge spacing/padding vs inactive on mobile */
+  .week-tab--active {
+    padding: 6px 0;
+    min-width: 0;
+  }
+}
+/* Day pill + Edit */
+
+.workout-day-header {
+  width: 100%;
+  max-width: 430px;
+  margin: 4px auto 0;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Completed status pill (shown only when a day is marked completed) */
+.completed-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(180,180,180,0.45);
+  background: rgba(180,180,180,0.12);
+  color: rgba(255,255,255,0.55);
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.completed-pill.is-complete{
+  border: 1px solid rgba(0,204,204,0.35);
+  background: rgba(0,204,204,0.10);
+  color: var(--tm-teal);
+}
+
+.completed-pill.is-incomplete{
+  /* explicit marker for clarity; base styling already "inactive" */
+}
+
+/* Reset Day (small danger pill; aligned with Settings reset affordance) */
+.workout-reset-day{
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,107,107,0.35);
+  background: rgba(255,107,107,0.08);
+  color: #ff6b6b;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.workout-reset-day:active{
+  transform: translateY(1px);
+}
+
+/* Edit Program (custom series only) */
+.workout-edit-program{
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 999px;
+
+  /* White pill with teal outline + teal text (non-destructive) */
+  background: #ffffff;
+  border: 2px solid #2aa6a3;
+  color: #2aa6a3;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.workout-edit-program:hover{
+  background: #2aa6a3;
+  color: #ffffff;
+}
+
+.workout-edit-program:active{
+  transform: translateY(1px);
+}
+
+.day-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.day-pill select {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  padding-right: 4px;
+}
+
+.day-pill select:focus-visible {
+  outline: none;
+}
+
+.day-pill-tag {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(31, 154, 160, 0.1);
+  color: var(--tm-teal);
+}
+
+.btn-text {
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--tm-text);
+  cursor: pointer;
+}
+
+/* Goal text */
+
+.workout-goal {
+  width: 100%;
+  max-width: 430px;
+  margin: 10px auto 4px;
+  padding: 0 16px;
+  font-size: 14px;
+  color: var(--tm-muted);
+}
+
+/* Exercise cards */
+
+.exercise-list {
+  width: 100%;
+  max-width: 430px;
+  margin: 6px auto 0;
+  padding: 0 12px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exercise-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 12px 14px 14px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+}
+
+/* Exercise completion state (UI-only): grey-out when ALL sets are logged */
+.exercise-card--completed {
+  background: #f3f4f6;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+}
+
+.exercise-card--completed .input-pill {
+  background: #e5e7eb;
+}
+
+.exercise-card--completed .exercise-title {
+  color: #0f172a;
+}
+
+/* Day completion state: teal/light teal background on ALL cards for that day (UI-only)
+   Note: this must OVERRIDE per-exercise completion grey-out once the day is completed. */
+.workout-day--completed .exercise-card {
+  position: relative;
+  background: #ecfdf5; /* very light teal/green (consistent with Completed pill family) */
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+}
+
+/* Ensure any in-progress grey styling is overridden when the day is completed */
+.workout-day--completed .exercise-card--completed {
+  background: #ecfdf5;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+}
+
+/* Optional: keep input pills visually consistent on the completed-day background */
+.workout-day--completed .exercise-card .input-pill,
+.workout-day--completed .exercise-card--completed .input-pill {
+  background: rgba(0, 204, 204, 0.08);
+}
+
+/* Remove the previous grey overlay that could read as "disabled" */
+.workout-day--completed .exercise-card::after {
+  content: none;
+}
+
+/* Header: Info/Edit above title */
+
+.exercise-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.exercise-header-links-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.exercise-header-links {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--tm-muted);
+}
+
+/* Top row inside exercise header: equipment pills (left) + Info/Edit (right) */
+.exercise-header-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Row of equipment pills (DB, BB, KB, BW, MC) */
+/* Smaller, compact equipment pill row */
+.equipment-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;                     /* slightly tighter spacing */
+}
+
+/* Compact equipment pills */
+.equipment-pill {
+  border-radius: 999px;
+  border: 1px solid var(--tm-border);
+  background: #ffffff;
+
+  padding: 2px 5px;             /* was 2px 6px → now smaller */
+  font-size: 9px;              /* was 11px → now smaller */
+  line-height: 1;               /* keeps the pill short and compact */
+
+  color: var(--tm-muted);
+  cursor: pointer;
+  min-width: 22px;              /* ensures button doesn’t collapse */
+  text-align: center;
+}
+
+/* Active state: same look but scaled */
+.equipment-pill--active {
+  background: var(--tm-teal);
+  border-color: var(--tm-teal);
+  color: #ffffff;
+}
+
+
+.exercise-header-links button {
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--tm-muted);
+  cursor: pointer;
+}
+
+/* Small icon-only action buttons (e.g., delete exercise) */
+.exercise-header-links .icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin-left: 2px;
+  border-radius: 6px;
+  color: var(--tm-muted);
+}
+
+.exercise-header-links .icon-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+.exercise-header-links .icon-btn:active {
+  transform: scale(0.98);
+}
+
+.exercise-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Note line under title */
+
+.exercise-note {
+  margin: 2px 0 4px;
+  font-size: 12px;
+  color: var(--tm-muted);
+}
+
+/* Set rows */
+
+/* Grid for 4 sets: 2 per row */
+.sets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
+  row-gap: 8px;
+  margin-top: 4px;
+}
+
+.set-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.set-label {
+  font-size: 13px;
+  color: var(--tm-text);
+}
+
+.set-fields {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Pill-style buttons for kg / reps */
+
+.input-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--tm-border);
+  background: #fdfefe;
+  padding: 6px 8px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--tm-text);       /* <-- add this */
+}
+
+/* suggested (placeholder-style) values */
+.input-pill--suggested {
+  color: var(--tm-muted);      /* light grey, like notes/goal text */
+}
+
+
+/* Footer */
+
+.workout-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--tm-bg);
+  padding: 8px 16px 12px;
+  box-shadow: 0 -6px 16px rgba(15, 23, 42, 0.12);
+}
+
+.workout-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.workout-summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 13px;
+  flex: 1;
+  min-width: 0;
+}
+
+.workout-summary-item .summary-label,
+.workout-summary-item .summary-value {
+  white-space: nowrap;
+}
+
+.summary-label {
+  color: var(--tm-muted);
+}
+
+.summary-value {
+  font-weight: 600;
+  color: var(--tm-text);
+}
+
+.workout-complete {
+  width: 100%;
+}
+
+/* Slide-out workout menu */
+
+.workout-menu {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+}
+
+.workout-menu::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.25);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.workout-menu-link:active,
+.workout-menu-link:focus-visible {
+  color: var(--tm-teal);
+  background: rgba(31, 154, 160, 0.08);
+  border-radius: 10px;
+}
+
+.workout-menu-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;              /* was 75% */
+  height: 100%;
+  background: #ffffff;
+  box-shadow: -8px 0 24px rgba(15, 23, 42, 0.18);
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.workout-menu--open {
+  pointer-events: auto;
+}
+
+.workout-menu--open::before {
+  opacity: 1;
+}
+
+.workout-menu--open .workout-menu-panel {
+  transform: translateX(0);
+}
+
+.workout-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--tm-border);
+}
+
+.workout-menu-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.workout-menu-close {
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.workout-menu-nav {
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.workout-menu-link {
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  text-align: left;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+/* Bottom-sheet editor for sets */
+
+.set-edit-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 50;
+}
+
+.set-edit-overlay--active {
+  display: flex;
+}
+
+.set-edit-modal {
+  width: 100%;
+  max-width: 430px;
+  background: #ffffff;
+  border-radius: 18px 18px 0 0;
+  padding: 16px 18px 20px;
+  box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.25);
+}
+
+/* -------------------------
+   Cardio set editor (uses same overlay)
+-------------------------- */
+.set-edit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+.set-edit-label {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.set-edit-input {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.18);
+  color: #fff;
+  font-size: 16px;
+}
+
+.set-edit-setlabel {
+  margin-top: -4px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Exercise Edit: small, unobtrusive top-right cancel so accidental "+" adds can be discarded */
+.set-edit-modal--exercise-edit {
+  position: relative;
+}
+
+.exercise-edit-cancel {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 134, 147, 0.35);
+  background: rgba(122, 134, 147, 0.10);
+  color: var(--tm-muted);
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exercise-edit-cancel:active {
+  transform: scale(0.98);
+}
+
+.set-edit-title {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.set-edit-exercise {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: var(--tm-muted);
+}
+
+.set-edit-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.exercise-info-line {
+  margin: 4px 0;
+  font-size: 14px;
+  color: var(--tm-text);
+}
+
+.exercise-info-line--muted {
+  font-size: 13px;
+  color: var(--tm-muted);
+}
+
+.exercise-edit-section-title {
+  margin: 12px 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tm-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.exercise-edit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+
+.exercise-edit-option {
+  width: 100%;
+  text-align: left;
+  border-radius: 999px;
+  border: 1px solid var(--tm-border);
+  background: #ffffff;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--tm-text);
+  cursor: pointer;
+}
+
+.exercise-edit-option:hover {
+  border-color: var(--tm-teal);
+}
+
+.exercise-edit-category-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.exercise-edit-category-pill {
+  border-radius: 999px;
+  border: 1px solid var(--tm-border);
+  background: #ffffff;
+  padding: 3px 8px;
+  font-size: 12px;
+  color: var(--tm-muted);
+  cursor: pointer;
+}
+
+.exercise-edit-category-pill--active {
+  background: var(--tm-teal);
+  border-color: var(--tm-teal);
+  color: #ffffff;
+}
+
+.exercise-edit-empty {
+  font-size: 13px;
+  color: var(--tm-muted);
+}
+
+/* Exercise Edit: Sets selector (Sklar) */
+.exercise-edit-sets-wrap{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin: 6px 0 14px;
+}
+
+.exercise-edit-sets-label{
+  font-size: 14px;
+  color: var(--tm-muted);
+}
+
+.exercise-edit-sets-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.exercise-edit-sets-pill{
+  border-radius: 999px;
+  border: 1px solid var(--tm-border);
+  background: #ffffff;
+  padding: 3px 10px;
+  font-size: 12px;
+  color: var(--tm-muted);
+  cursor:pointer;
+}
+
+.exercise-edit-sets-pill--active{
+  background: var(--tm-teal);
+  border-color: var(--tm-teal);
+  color:#ffffff;
+}
+
+
+/* Workout menu divider + Settings */
+.workout-menu-divider{
+  height:1px;
+  background: rgba(255,255,255,0.12);
+  margin: 12px 0;
+}
+
+.settings-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top: 14px;
+}
+
+.settings-item{
+  width:100%;
+  text-align:left;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.04);
+  color: var(--tm-text, #fff);
+  font: inherit;
+}
+
+.settings-item--danger{
+  color: #ff6b6b;
+  border-color: rgba(255,107,107,0.35);
+}
+
+.settings-item:active{
+  transform: translateY(1px);
+}
+
+
+/* Settings: Reset Week dropdown row */
+
+/* Settings: make Reset Week row more compact (match button styling) */
+.settings-item.settings-row{
+  padding: 10px 12px; /* narrower vertically */
+  font-size: 15px;
+}
+
+.settings-row-label{
+  font-size: 15px;
+}
+
+.settings-row-select{
+  padding: 8px 10px;
+  font-size: 15px;
+}
+
+.settings-row-button{
+  padding: 8px 10px;
+  font-size: 15px;
+}
+
+.settings-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.settings-row-label{
+  flex: 1 1 auto;
+  color: inherit;
+}
+
+.settings-row-select{
+  flex: 0 0 auto;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.18);
+  color: var(--tm-text, #fff);
+  font: inherit;
+}
+
+.settings-row-button{
+  flex: 0 0 auto;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,107,107,0.35);
+  background: rgba(255,107,107,0.08);
+  color: #ff6b6b;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Destructive action: Reset Day */
+.workout-day-header .btn-text {
+    color: #b42318; /* deep burgundy red */
+    font-weight: 500;
+}
+
+    .workout-day-header .btn-text:hover {
+        color: #8f1d14;
+    }
+
+
+/* Disclosure dropdowns (Profile / 1RM / Workout) */
+.tm-disclosure-group{
+  width: 100%;
+  margin-top: 12px;
+}
+
+.tm-disclosure-toggle{
+  width: 100%;
+  border: 1px solid var(--tm-border);
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--tm-text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.tm-chev{
+  color: var(--tm-muted);
+  font-size: 14px;
+  line-height: 1;
+  transform: rotate(0deg);
+  transition: transform 0.15s ease;
+}
+
+.tm-disclosure-toggle[aria-expanded="true"] .tm-chev{
+  transform: rotate(180deg);
+}
+
+.tm-disclosure-content{
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid var(--tm-border);
+  font-size: 13px;
+  color: var(--tm-muted);
+  line-height: 1.35;
+}
+
+.tm-disclosure-group{
+  width: 100%;
+  margin-top: 12px;
+}
+
+.tm-disclosure-toggle{
+  width: 100%;
+  border: 1px solid var(--tm-border);
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--tm-text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.tm-chev{
+  color: var(--tm-muted);
+  font-size: 14px;
+  line-height: 1;
+  transform: rotate(0deg);
+  transition: transform 0.15s ease;
+}
+
+.tm-disclosure-toggle[aria-expanded="true"] .tm-chev{
+  transform: rotate(180deg);
+}
+
+.tm-disclosure-content{
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid var(--tm-border);
+  font-size: 13px;
+  color: var(--tm-muted);
+  line-height: 1.35;
+}
+
+
+/* -------------------------
+   History / My Workouts
+------------------------- */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 16px 24px;
+}
+.history-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  padding: 12px 12px;
+}
+.history-title {
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px;
+}
+.history-meta {
+  margin: 0 0 10px;
+  opacity: 0.85;
+}
+.history-actions {
+  display: flex;
+  gap: 10px;
+}
+.history-actions .btn {
+  flex: 1;
+}
+
+/* v2.1.0-final: ensure Past Workouts action buttons use matching font size */
+.history-actions .btn-teal-pill,
+.history-actions .btn-danger-pill{
+  font-size: 13px;
+}
+
+/* Smaller outline button for workout footer reuse */
+.workout-reuse-week {
+  font-weight: 600;
+}
+
+
+/* Past Workouts: series navigation */
+.history-series-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:8px 0 12px 0;
+}
+.history-series-title{
+  font-weight:700;
+  color:#0f172a;
+}
+
+/* Home screen hamburger (fixed so it never affects layout) */
+.home-hamburger{
+  position: fixed;
+  /* Slightly lower and further from the right edge */
+  top: 28px;
+  right: 28px;
+
+  /* Reduce icon size by ~40% */
+  width: 17px;
+  height: 13px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+
+  /* Ensure the slide-out menu sits above this button when open */
+  z-index: 30;
+}
+
+
+.home-hamburger span{
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #0f172a;
+  border-radius: 2px;
+}
+
+/* When menu is open, prevent the home hamburger from sitting above / intercepting clicks */
+body.tm-menu-open .home-hamburger{
+  pointer-events: none;
+}
+
+
+
+/* Compact buttons (My Workouts actions) */
+.btn-small{
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.history-meta-line{
+  display:block;
+  line-height: 1.25;
+}
+
+/* -------------------------
+   Custom programme builder (Phase 2)
+   ------------------------- */
+
+.custom-builder-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  width:100%;
+}
+
+.select--pill{
+  border-radius:999px !important;
+  padding: 12px 16px !important;
+  min-width: 140px;
+}
+
+.btn-pill{
+  border-radius:999px;
+  padding: 12px 18px;
+}
+
+/* Custom builder: slightly tighter pill controls (only on builder screen) */
+#screen-custom-builder .select--pill{
+  padding: 9px 14px !important;
+  font-size: 14px;
+}
+
+#screen-custom-builder #btn-custom-add-exercise.btn-pill{
+  padding: 9px 16px;
+  font-size: 13px; /* smaller text while keeping a generous hitbox */
+}
+
+/* -------------------------
+   Sklar: Add extra exercise
+   ------------------------- */
+.add-exercise-btn {
+  display: block;
+  width: 100%;
+  margin: 12px 0 0;
+  padding: 10px 0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 15px; /* smaller text/icon while preserving tappable padding */
+  line-height: 1;
+}
+
+.add-exercise-btn:active {
+  transform: scale(0.99);
+}
+
+/* Custom builder: match Equipment Key styling used elsewhere */
+#screen-custom-builder #custom-equipment-key{
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid var(--tm-border);
+  padding: 10px 12px;
+  font-size: 15px;
+  background: #fff;
+}
+
+/* Custom builder: consistent spacing between cards */
+.custom-builder-list .exercise-card{
+  margin-bottom: 18px;
+}
+.custom-builder-list .exercise-card:last-child{
+  margin-bottom: 0;
+}
+
+/* Custom builder: set-count selector */
+.custom-set-count{
+  border: 1px solid var(--tm-border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: #fff;
+}
+
+.field select {
+  border-radius: 12px;
+  border: 1px solid var(--tm-border);
+  padding: 10px 12px;
+  font-size: 15px;
+  background: #fff;
+}
+
+.custom-builder-list .custom-ex-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.custom-builder-list .custom-ex-row .field {
+  flex: 1;
+  margin: 0;
+}
+
+
+/* v2.2.0: Programme name + day focus block (above day selector) */
+/* Ensure Sklar title + focus line are LEFT-aligned (not centred) */
+.workout-program-block{
+  width: 100%;
+  max-width: 430px;
+  margin: 10px auto 0;
+  padding: 10px 16px 6px;
+  text-align: left;
+  align-self: stretch; /* override centred screen alignment */
+}
+
+.workout-program-name{
+  font-weight: 800;
+  font-size: 16px;
+  color: #111;
+  line-height: 1.2;
+  margin: 0 0 4px;
+  text-align: left;
+}
+
+.workout-program-block .workout-goal{
+  font-size: 13px;
+  color: #333;
+  line-height: 1.25;
+  margin: 0;
+  text-align: left;
+}
+
+/* Program selection: custom programme cards (Continue / Edit / Delete) */
+.program-card-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.program-card-actions .btn-teal-pill,
+.program-card-actions .btn-outline-teal-pill,
+.program-card-actions .btn-danger-pill{
+  flex: 1;
+  padding: 12px 10px;
+  font-size: 14px;
+}
+
+
+
+/* v2.7.4: Workout footer summary - fit 5 items on one line (mobile) */
+@media (max-width: 420px) {
+  .workout-summary-row {
+    gap: 6px;
+  }
+  .workout-summary-item {
+    font-size: 12px;
+  }
+}
