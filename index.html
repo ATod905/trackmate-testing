@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>TrackMate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/png" href="assets/TrackMate_logo_icon.png" />
+  <link rel="apple-touch-icon" href="assets/TrackMate_logo_icon.png" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- WELCOME SCREEN - PAGE 1 -->
+        <main class="screen screen--active" id="screen-welcome">
+            <!-- Home hamburger: fixed-position so it does not affect layout -->
+            <button type="button" class="workout-menu-button home-hamburger" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="welcome-logo">
+                <img src="assets/logo-trackmate.png" alt="TrackMate logo" data-home-logo="true" />
+            </div>
+
+            <h1 id="welcomeTitle" class="welcome-title">Welcome!</h1>
+
+            <p class="welcome-tagline">TrackMate — building strength, week by week.</p>
+
+            <div class="welcome-buttons">
+                <button id="btn-welcome-setup" class="btn btn-outline-teal">
+                    Setup Profile
+                </button>
+
+                <!-- NEW: Select Program button -->
+                <button id="btn-welcome-programs" class="btn btn-outline-teal">
+                    Select a Program
+                </button>
+
+                <button id="btn-welcome-history" class="btn btn-outline-teal" style="display:none;">
+                    My Past Workouts
+                </button>
+
+                <button id="btn-welcome-continue" class="btn btn-teal">
+                    Continue to Workouts
+                </button>
+            </div>
+
+			<p class="welcome-version">Version 2.8.6</p>
+        </main>
+
+        <!-- PROFILE SCREEN - PAGE 2 -->
+        <main class="screen screen--with-header" id="screen-profile">
+            <button type="button" class="link-back" data-target="screen-welcome">‹ Back</button>
+            <!-- Shared header: centred logo + menu -->
+            <header class="workout-header">
+                <div class="header-logo-center">
+                    <img src="assets/TrackMate_logo_icon.png" alt="TrackMate logo" data-home-logo="true">
+                </div>
+                <button type="button"
+                        class="workout-menu-button"
+                        aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </header>
+
+            <h1 class="screen-title">Profile</h1>
+
+            <p class="screen-subtitle">Tell TrackMate a bit about you.</p>
+
+            <form id="profile-form" class="form-card">
+                <!-- Name -->
+                <label class="field">
+                    <span class="field-label">Name or nickname</span>
+                    <input type="text"
+                           id="profile-name"
+                           placeholder="What should we call you?"
+                           autocomplete="name"
+                           required />
+                </label>
+
+                <!-- Sex -->
+                <div class="field">
+                    <span class="field-label">Sex</span>
+                    <div class="segmented" id="sex-segment">
+                        <button type="button"
+                                class="segmented-option"
+                                data-sex-option="male">
+                            Male
+                        </button>
+                        <button type="button"
+                                class="segmented-option"
+                                data-sex-option="female">
+                            Female
+                        </button>
+                    </div>
+                    <input type="hidden" id="profile-sex" value="" />
+                </div>
+
+                <!-- Units -->
+                <div class="field">
+                    <span class="field-label">Units</span>
+                    <div class="segmented" id="units-segment">
+                        <button type="button"
+                                class="segmented-option segmented-option--active"
+                                data-units-option="metric">
+                            Metric (kg, cm)
+                        </button>
+                        <button type="button"
+                                class="segmented-option"
+                                data-units-option="imperial">
+                            Imperial (lb, in)
+                        </button>
+                    </div>
+                    <input type="hidden" id="profile-units" value="metric" />
+                </div>
+
+                <!-- Height -->
+                <label class="field">
+                    <span class="field-label" id="label-height-unit">Height (cm)</span>
+                    <input type="number"
+                           id="profile-height"
+                           inputmode="decimal"
+                           min="0"
+                           step="0.1"
+                           placeholder="e.g. 175" />
+                </label>
+
+                <!-- Height preview -->
+                <div class="field field-inline">
+                    <span class="field-label">Height preview</span>
+                    <span id="profile-height-preview" class="badge-metric">—</span>
+                </div>
+
+                <!-- Weight -->
+                <label class="field">
+                    <span class="field-label" id="label-weight-unit">Weight (kg)</span>
+                    <input type="number"
+                           id="profile-weight"
+                           inputmode="decimal"
+                           min="0"
+                           step="0.1"
+                           placeholder="e.g. 70" />
+                </label>
+
+                <!-- Age -->
+                <label class="field">
+                    <span class="field-label">Age</span>
+                    <input type="number"
+                           id="profile-age"
+                           min="13"
+                           max="100"
+                           placeholder="e.g. 30" />
+                </label>
+
+                <!-- BMI display -->
+                <div class="field field-inline">
+                    <span class="field-label">BMI</span>
+                    <span id="profile-bmi" class="badge-metric">—</span>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-teal profile-submit">
+                    Continue
+                </button>
+            
+            </form>
+
+            <div class="tm-disclosure-group">
+                <button type="button" class="tm-disclosure-toggle" data-disclosure="profile-1rm" aria-expanded="false">
+                    What is a 1 Rep Max?
+                    <span class="tm-chev">▾</span>
+                </button>
+                <div class="tm-disclosure-content" data-disclosure-content="profile-1rm" hidden>
+                    A 1 Rep Max (1RM) is an estimate of the maximum weight you could lift for one repetition. TrackMate estimates this from a safe set of 3–6 controlled reps — do not attempt a true 1-rep max.
+                </div>
+
+                <button type="button" class="tm-disclosure-toggle" data-disclosure="profile-equip" aria-expanded="false">
+                    Equipment Key
+                    <span class="tm-chev">▾</span>
+                </button>
+                <div class="tm-disclosure-content" data-disclosure-content="profile-equip" hidden>
+                    DB = Dumbbells<br />
+                    BB = Barbell<br />
+                    KB = Kettlebell<br />
+                    BW = Bodyweight<br />
+                    MC = Machine/Cable
+                </div>
+            </div>
+
+        </main>
+
+        <!-- PROGRAM SELECTION SCREEN (NEW) - PAGE 3b -->
+        <main class="screen screen--with-header" id="screen-programs">
+            <button type="button" class="link-back" data-target="screen-welcome">‹ Back</button>
+
+            <header class="workout-header">
+                <div class="header-logo-center">
+                    <img src="assets/TrackMate_logo_icon.png" alt="TrackMate logo" data-home-logo="true">
+                </div>
+                <button type="button"
+                        class="workout-menu-button"
+                        aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </header>
+
+            <h1 class="screen-title">Select a Program</h1>
+
+            <p class="screen-subtitle">Choose a training program to use in TrackMate.</p>
+
+            <section class="choice-card">
+                <h2 class="choice-title">Create Your Program</h2>
+                <p class="choice-text">
+                    Name your programme and build a single-week training programme (Week 1) using TrackMate’s exercise library. You can add exercises for Days 1–7.
+                </p>
+
+                <label class="field" style="margin-top: 14px;">
+                    <span class="field-label">Programme name</span>
+                    <input type="text"
+                           id="create-program-name"
+                           placeholder="e.g. Summer Strength"
+                           autocomplete="off" />
+                </label>
+                <p class="tm-error" id="create-program-error" hidden>Please enter a programme name.</p>
+
+                <button type="button" id="btn-program-create" class="btn btn-teal btn-full" style="margin-top: 10px;">
+                    Start Building
+                </button>
+            </section>
+
+            <section class="choice-card" id="created-programs-block" hidden>
+                <h3 class="choice-title" style="margin-bottom: 8px;">Created Programmes</h3>
+                <div id="created-programs-list"></div>
+            </section>
+
+
+            <section class="choice-card">
+                <h2 class="choice-title">Sklar 6-Week Strength &amp; Hypertrophy</h2>
+                <p class="choice-text">
+                    Upper / lower / pump split inspired by trainer Paul Sklar with 6 weeks of progressive training.
+                </p>
+                <button type="button" id="btn-program-sklar" class="btn btn-teal btn-full">
+                    Use this Program
+                </button>
+            </section>
+
+            <section class="choice-card">
+                <h2 class="choice-title">More Programs Coming Soon</h2>
+                <p class="choice-text">
+                    Additional TrackMate programs will appear here as they are added.
+                </p>
+            </section>
+        </main>
+
+        <!-- PROGRAM BUILDER (PHASED) - PAGE 3c -->
+        <main class="screen screen--with-header" id="screen-custom-builder">
+            <button type="button" class="link-back" data-target="screen-programs">‹ Back</button>
+
+            <header class="workout-header">
+                <div class="header-logo-center">
+                    <img src="assets/TrackMate_logo_icon.png" alt="TrackMate logo" data-home-logo="true">
+                </div>
+                <button type="button"
+                        class="workout-menu-button"
+                        aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </header>
+
+            <h1 class="screen-title">Create Your Workout/Program</h1>
+            <p class="screen-subtitle">
+                Programme: <strong id="custom-builder-program-title">—</strong>
+            </p>
+
+            <section class="choice-card">
+                <div class="row row--space">
+                    <div class="custom-builder-top">
+                        <select id="custom-day-select" class="select select--pill" aria-label="Select day">
+                            <option value="1">Day 1</option>
+                            <option value="2">Day 2</option>
+                            <option value="3">Day 3</option>
+                            <option value="4">Day 4</option>
+                            <option value="5">Day 5</option>
+                            <option value="6">Day 6</option>
+                            <option value="7">Day 7</option>
+                        </select>
+
+                        <button type="button"
+                                id="btn-custom-add-exercise"
+                                class="btn btn-outline-teal btn-pill"
+                                style="white-space: nowrap;">
+                            + Add Exercise
+                        </button>
+                    </div>
+                </div>
+
+                <select id="custom-equipment-key" class="select" aria-label="Equipment Key" style="margin-top: 12px;">
+                    <option value="" selected>Equipment Key</option>
+                    <option value="ALL">All equipment</option>
+                    <option value="DB">DB — Dumbbells</option>
+                    <option value="BB">BB — Barbell</option>
+                    <option value="KB">KB — Kettlebell</option>
+                    <option value="BW">BW — Bodyweight</option>
+                    <option value="MC">MC — Machine/Cable</option>
+                </select>
+
+                <p class="tm-error" id="custom-builder-error" hidden></p>
+
+                <div id="custom-builder-list" class="custom-builder-list" style="margin-top: 12px;"></div>
+
+                <button type="button"
+                        id="btn-custom-save-and-use"
+                        class="btn btn-teal btn-full"
+                        style="margin-top: 14px;">
+                    Save Program &amp; Use It
+                </button>
+            </section>
+        </main>
+
+        <!-- Custom exercise picker (builder) -->
+        <div id="custom-ex-picker" class="set-edit-overlay" aria-hidden="true">
+            <div class="set-edit-modal" style="max-height: 78vh; overflow: hidden;">
+                <div class="set-edit-title" style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                    <span id="custom-ex-picker-title" style="font-weight:700;">Add an exercise</span>
+                    <button type="button" id="custom-ex-picker-close" class="workout-menu-close" aria-label="Close">×</button>
+                </div>
+
+                <!-- Edit-mode meta (shown only when replacing an exercise) -->
+                <div id="custom-ex-picker-edit-meta" style="display:none; margin-top: 6px;">
+                    <div id="custom-ex-picker-current" class="exercise-edit-current" style="margin: 0 0 10px 0;"></div>
+
+                    <div id="custom-ex-picker-sets-wrap" class="exercise-edit-sets-wrap" style="display:flex; align-items:center; gap:10px; margin-bottom: 10px;">
+                        <div class="exercise-edit-sets-label" style="font-weight:600; color:#7a8693;">Sets:</div>
+                        <div id="custom-ex-picker-sets-row" class="exercise-edit-sets-row"></div>
+                    </div>
+                </div>
+
+                <label class="field" style="margin-top:10px;">
+                    <span class="field-label">Search</span>
+                    <input type="text" id="custom-ex-picker-search" placeholder="Type to search…" autocomplete="off" />
+                </label>
+
+                <div class="exercise-edit-category-title" style="margin-top: 12px;">BROWSE BY CATEGORY</div>
+                <div id="custom-ex-picker-category-row" class="exercise-edit-category-row" style="margin-top: 8px;">
+                    <button type="button" class="exercise-edit-category-pill" data-custom-cat="Back">Back</button>
+                    <button type="button" class="exercise-edit-category-pill" data-custom-cat="Chest">Chest</button>
+                    <button type="button" class="exercise-edit-category-pill" data-custom-cat="Shoulders">Shoulders</button>
+                    <button type="button" class="exercise-edit-category-pill" data-custom-cat="Legs">Legs</button>
+                    <button type="button" class="exercise-edit-category-pill" data-custom-cat="Arms">Arms</button>
+                    <button type="button" class="exercise-edit-category-pill" data-custom-cat="Core">Core</button>
+                </div>
+
+                <div id="custom-ex-picker-list" style="margin-top:10px; overflow:auto; max-height: 52vh;"></div>
+            </div>
+        </div>
+
+        <!-- START vs 1RM CHOICE SCREEN - PAGE 4 -->
+        <main class="screen screen--with-header" id="screen-start-choice">
+            <button type="button" class="link-back" data-target="screen-profile">‹ Back</button>
+
+            <header class="workout-header">
+                <div class="header-logo-center">
+                    <img src="assets/TrackMate_logo_icon.png" alt="TrackMate logo" data-home-logo="true">
+                </div>
+                <button type="button"
+                        class="workout-menu-button"
+                        aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </header>
+
+            <h1 class="screen-title">Let’s get started</h1>
+
+            <p class="screen-subtitle">
+                You can jump straight into your program or run a quick 1RM test.
+            </p>
+
+            <section class="choice-card">
+                <h2 class="choice-title">Do a 1 Rep Max Test (1RM)</h2>
+                <p class="choice-text">
+                    Use a weight you can lift 3–6 times and we’ll estimate your 1-rep maxes.
+                </p>
+                <button id="btn-go-1rm" class="btn btn-outline-teal btn-full">
+                    Run 1 Rep Max Test
+                </button>
+            </section>
+
+            <section class="choice-card">
+                <h2 class="choice-title">Start Workouts</h2>
+                <p class="choice-text">
+                    We’ll use your profile to estimate your starting weights and begin Week 1.
+                </p>
+                <button id="btn-start-workouts" class="btn btn-teal btn-full">
+                    Start Workouts
+                </button>
+            </section>
+        </main>
+
+        <!-- 1RM TEST SCREEN - PAGE 3a -->
+        <main class="screen screen--with-header" id="screen-1rm">
+            <button type="button" class="link-back" data-target="screen-start-choice">‹ Back</button>
+
+            <header class="workout-header">
+                <div class="header-logo-center">
+                    <img src="assets/TrackMate_logo_icon.png" alt="TrackMate logo" data-home-logo="true">
+                </div>
+                <button type="button"
+                        id="workout-menu-button-1rm"
+                        class="workout-menu-button"
+                        aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </header>
+
+
+            <h1 class="screen-title">1 Rep Max Test</h1>
+
+            <p class="screen-subtitle">
+                Use a weight you can lift for 3–6 controlled reps. TrackMate will estimate your 1 Rep Max (1RM) automatically.
+                Do not attempt a true 1-rep max.
+            </p>
+
+            <button type="button" class="tm-disclosure-toggle" data-disclosure="rm-equip" aria-expanded="false">
+                Equipment Key
+                <span class="tm-chev">▾</span>
+            </button>
+            <div class="tm-disclosure-content" data-disclosure-content="rm-equip" hidden>
+                DB = Dumbbells<br />
+                BB = Barbell<br />
+                KB = Kettlebell<br />
+                BW = Bodyweight<br />
+                MC = Machine/Cable
+            </div>
+
+            <section class="one-rm-card" data-exercise="bench_press">
+            <div class="one-rm-header-row">
+                <h2 class="one-rm-title">Bench Press</h2>
+                <div class="equipment-pill-row one-rm-equip"><button type="button" class="equipment-pill" data-equip="DB">DB</button><button type="button" class="equipment-pill equipment-pill--active equipment-pill--active" data-equip="BB">BB</button><button type="button" class="equipment-pill" data-equip="KB">KB</button><button type="button" class="equipment-pill" data-equip="BW">BW</button><button type="button" class="equipment-pill" data-equip="MC">MC</button></div>
+            </div>
+                <div class="one-rm-fields">
+                    <label class="field">
+                        <span class="field-label">Weight (kg or lb)</span>
+                        <input type="number"
+                               class="one-rm-weight"
+                               inputmode="decimal"
+                               min="0"
+                               step="0.5"
+                               placeholder="e.g. 60" />
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Reps</span>
+                        <input type="number"
+                               class="one-rm-reps"
+                               inputmode="numeric"
+                               min="1"
+                               max="12"
+                               placeholder="e.g. 5" />
+                    </label>
+                </div>
+                <div class="one-rm-result">
+                    Estimated 1RM:
+                    <span class="one-rm-result-value">—</span>
+                </div>
+            </section>
+
+            <section class="one-rm-card" data-exercise="squat">
+            <div class="one-rm-header-row">
+                <h2 class="one-rm-title">Back Squat</h2>
+                <div class="equipment-pill-row one-rm-equip"><button type="button" class="equipment-pill" data-equip="DB">DB</button><button type="button" class="equipment-pill equipment-pill--active equipment-pill--active" data-equip="BB">BB</button><button type="button" class="equipment-pill" data-equip="KB">KB</button><button type="button" class="equipment-pill" data-equip="BW">BW</button><button type="button" class="equipment-pill" data-equip="MC">MC</button></div>
+            </div>
+                <div class="one-rm-fields">
+                    <label class="field">
+                        <span class="field-label">Weight (kg or lb)</span>
+                        <input type="number"
+                               class="one-rm-weight"
+                               inputmode="decimal"
+                               min="0"
+                               step="0.5"
+                               placeholder="e.g. 80" />
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Reps</span>
+                        <input type="number"
+                               class="one-rm-reps"
+                               inputmode="numeric"
+                               min="1"
+                               max="12"
+                               placeholder="e.g. 3" />
+                    </label>
+                </div>
+                <div class="one-rm-result">
+                    Estimated 1RM:
+                    <span class="one-rm-result-value">—</span>
+                </div>
+            </section>
+
+            <section class="one-rm-card" data-exercise="deadlift">
+            <div class="one-rm-header-row">
+                <h2 class="one-rm-title">Deadlift</h2>
+                <div class="equipment-pill-row one-rm-equip"><button type="button" class="equipment-pill" data-equip="DB">DB</button><button type="button" class="equipment-pill equipment-pill--active equipment-pill--active" data-equip="BB">BB</button><button type="button" class="equipment-pill" data-equip="KB">KB</button><button type="button" class="equipment-pill" data-equip="BW">BW</button><button type="button" class="equipment-pill" data-equip="MC">MC</button></div>
+            </div>
+                <div class="one-rm-fields">
+                    <label class="field">
+                        <span class="field-label">Weight (kg or lb)</span>
+                        <input type="number"
+                               class="one-rm-weight"
+                               inputmode="decimal"
+                               min="0"
+                               step="0.5"
+                               placeholder="e.g. 100" />
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Reps</span>
+                        <input type="number"
+                               class="one-rm-reps"
+                               inputmode="numeric"
+                               min="1"
+                               max="12"
+                               placeholder="e.g. 4" />
+                    </label>
+                </div>
+                <div class="one-rm-result">
+                    Estimated 1RM:
+                    <span class="one-rm-result-value">—</span>
+                </div>
+            </section>
+
+            <section class="one-rm-card" data-exercise="ohp">
+            <div class="one-rm-header-row">
+                <h2 class="one-rm-title">Overhead Press</h2>
+                <div class="equipment-pill-row one-rm-equip"><button type="button" class="equipment-pill" data-equip="DB">DB</button><button type="button" class="equipment-pill equipment-pill--active equipment-pill--active" data-equip="BB">BB</button><button type="button" class="equipment-pill" data-equip="KB">KB</button><button type="button" class="equipment-pill" data-equip="BW">BW</button><button type="button" class="equipment-pill" data-equip="MC">MC</button></div>
+            </div>
+                <div class="one-rm-fields">
+                    <label class="field">
+                        <span class="field-label">Weight (kg or lb)</span>
+                        <input type="number"
+                               class="one-rm-weight"
+                               inputmode="decimal"
+                               min="0"
+                               step="0.5"
+                               placeholder="e.g. 35" />
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Reps</span>
+                        <input type="number"
+                               class="one-rm-reps"
+                               inputmode="numeric"
+                               min="1"
+                               max="12"
+                               placeholder="e.g. 6" />
+                    </label>
+                </div>
+                <div class="one-rm-result">
+                    Estimated 1RM:
+                    <span class="one-rm-result-value">—</span>
+                </div>
+            </section>
+
+            <section class="one-rm-card" data-exercise="row">
+            <div class="one-rm-header-row">
+                <h2 class="one-rm-title">Barbell Row</h2>
+                <div class="equipment-pill-row one-rm-equip"><button type="button" class="equipment-pill" data-equip="DB">DB</button><button type="button" class="equipment-pill equipment-pill--active equipment-pill--active" data-equip="BB">BB</button><button type="button" class="equipment-pill" data-equip="KB">KB</button><button type="button" class="equipment-pill" data-equip="BW">BW</button><button type="button" class="equipment-pill" data-equip="MC">MC</button></div>
+            </div>
+                <div class="one-rm-fields">
+                    <label class="field">
+                        <span class="field-label">Weight (kg or lb)</span>
+                        <input type="number"
+                               class="one-rm-weight"
+                               inputmode="decimal"
+                               min="0"
+                               step="0.5"
+                               placeholder="e.g. 50" />
+                    </label>
+                    <label class="field">
+                        <span class="field-label">Reps</span>
+                        <input type="number"
+                               class="one-rm-reps"
+                               inputmode="numeric"
+                               min="1"
+                               max="12"
+                               placeholder="e.g. 8" />
+                    </label>
+                </div>
+                <div class="one-rm-result">
+                    Estimated 1RM:
+                    <span class="one-rm-result-value">—</span>
+                </div>
+            </section>
+
+            <button id="btn-1rm-save" class="btn btn-teal btn-full" style="margin-top: 20px;">
+                Save All 1RMs &amp; Continue
+            </button>
+        </main>
+
+        <!-- WORKOUT SCREEN - PAGE 5 -->
+        <main class="screen" id="screen-workout">
+            <!-- NEW: Back button on workout page -->
+            <button type="button" class="link-back" data-target="screen-start-choice">‹ Back</button>
+
+            <header class="workout-header">
+                <div class="header-logo-center">
+                    <img src="assets/TrackMate_logo_icon.png" alt="TrackMate logo" data-home-logo="true">
+                </div>
+
+                <!-- Keep the menu button aligned right -->
+                <button type="button" id="workout-menu-button-workout" class="workout-menu-button" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </header>
+
+            <!-- Week tabs -->
+            <nav class="week-tabs">
+                <button class="week-tab week-tab--active" data-week="1">Week 1</button>
+                <button class="week-tab" data-week="2">Week 2</button>
+                <button class="week-tab" data-week="3">Week 3</button>
+                <button class="week-tab" data-week="4">Week 4</button>
+                <button class="week-tab" data-week="5">Week 5</button>
+                <button class="week-tab" data-week="6">Week 6</button>
+            </nav>
+
+            <div class="workout-program-block">
+                <div id="workout-program-name" class="workout-program-name"></div>
+                <div id="workout-goal" class="workout-goal"></div>
+            </div>
+
+            <!-- Day + theme row -->
+            <div class="workout-day-header">
+                <div class="day-pill">
+                    <select id="workout-day-select">
+                        <option value="0">Day 1</option>
+                        <option value="1">Day 2</option>
+                        <option value="2">Day 3</option>
+                        <option value="3">Day 4</option>
+                        <option value="4">Day 5</option>
+                    </select>
+                    <span id="workout-theme-badge" class="day-pill-tag">PULL</span>
+                </div>
+
+                <!-- Custom programmes: edit the current day in the builder -->
+                <button id="workout-edit-program" class="workout-edit-program" type="button" hidden>Edit</button>
+
+                <!-- Shown only when the current day is completed -->
+                <span id="workout-completed-badge" class="completed-pill is-incomplete">Completed</span>
+
+                <!-- Reset current day (sets only). Styled to match Settings "Reset" affordance, but smaller. -->
+                <button class="workout-reset-day" type="button">Reset Day</button>
+</div>
+
+            <button type="button" class="tm-disclosure-toggle" data-disclosure="workout-equip" aria-expanded="false">
+                Equipment Key
+                <span class="tm-chev">▾</span>
+            </button>
+            <div class="tm-disclosure-content" data-disclosure-content="workout-equip" hidden>
+                DB = Dumbbells<br />
+                BB = Barbell<br />
+                KB = Kettlebell<br />
+                BW = Bodyweight<br />
+                MC = Machine/Cable
+            </div>
+
+            <!-- Exercise cards rendered by JS -->
+            <div id="workout-exercise-list" class="exercise-list"></div>
+
+            <!-- Footer: volume + reps + complete -->
+            <footer class="workout-footer">
+                <div class="workout-summary-row">
+                    <div class="workout-summary-item">
+                        <span class="summary-label">Progress</span>
+                        <span class="summary-value" id="summary-progress">0/0</span>
+                    </div>
+                    <div class="workout-summary-item">
+                        <span class="summary-label">Reps</span>
+                        <span class="summary-value" id="summary-reps">0</span>
+                    </div>
+                    <div class="workout-summary-item">
+						<span class="summary-label">Vol.</span>
+                        <span class="summary-value" id="summary-volume">0 kg</span>
+                    </div>
+                    <div class="workout-summary-item">
+						<span class="summary-label">Cal.</span>
+                        <span class="summary-value" id="summary-calories">0</span>
+                    </div>
+                    <div class="workout-summary-item">
+                        <span class="summary-label">Duration</span>
+                        <span class="summary-value" id="summary-duration">—</span>
+                    </div>
+                </div>
+<button class="btn btn-teal btn-full workout-complete">
+                    Complete Workout
+                </button>
+            </footer>
+
+
+        </main>
+
+
+<!-- PAST WORKOUTS / HISTORY SCREEN -->
+<main class="screen screen--with-header" id="screen-history">
+    <button type="button" class="link-back" data-target="screen-welcome">‹ Back</button>
+
+    <header class="workout-header">
+        <div class="header-logo-center">
+            <img src="assets/TrackMate_logo_icon.png" alt="TrackMate logo" data-home-logo="true">
+        </div>
+        <button type="button" class="workout-menu-button" aria-label="Open menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <h1 class="screen-title">My Past Workouts</h1>
+    <p class="screen-subtitle">Review completed workouts and delete entries if you want to start again.</p>
+
+    <div class="history-list" id="history-list"></div>
+</main>
+
+        <!-- SETTINGS SCREEN -->
+        
+        <main class="screen screen--with-header" id="screen-equipment-key">
+            <button type="button" class="link-back" data-target="screen-workout">‹ Back</button>
+
+            <header class="workout-header">
+                <div class="header-logo-center">
+                    <img src="assets/TrackMate_logo_icon.png" alt="TrackMate logo" data-home-logo="true">
+                </div>
+                <button type="button" class="workout-menu-button" aria-label="Open menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </header>
+
+            <h1 class="screen-title">Equipment Key</h1>
+            <p class="screen-subtitle">Quick reference for equipment tags used in workouts.</p>
+
+            <div class="form-card">
+                <p class="exercise-info-line"><strong>DB</strong> — Dumbbells</p>
+                <p class="exercise-info-line"><strong>BB</strong> — Barbell</p>
+                <p class="exercise-info-line"><strong>KB</strong> — Kettlebell</p>
+                <p class="exercise-info-line"><strong>BW</strong> — Bodyweight</p>
+                <p class="exercise-info-line"><strong>MC</strong> — Machine/Cable</p>
+            </div>
+        </main>
+
+
+        <main class="screen screen--with-header" id="screen-settings">
+            <button type="button" class="link-back" data-target="screen-workout">‹ Back</button>
+
+            <header class="workout-header">
+                <div class="header-logo-center">
+                    <img src="assets/TrackMate_logo_icon.png" alt="TrackMate logo" data-home-logo="true">
+                </div>
+                <button type="button" class="workout-menu-button" aria-label="Open menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </header>
+
+            <h1 class="screen-title">Settings</h1>
+
+            <div class="settings-list">
+                <button type="button" class="settings-item" data-settings-action="edit-profile">Edit Profile</button>
+                <button type="button" class="settings-item" data-settings-action="edit-program">Edit Program</button>
+                <button type="button" class="settings-item" data-settings-action="units">Units (kg / lb)</button>
+                <div class="settings-item settings-row">
+                    <label class="settings-row-label" for="settings-continue-mode">Continue to Workouts opens</label>
+                    <select id="settings-continue-mode" class="settings-row-select" aria-label="Choose continue behaviour">
+                        <option value="next">Next incomplete workout</option>
+                        <option value="resume">Resume last viewed</option>
+                    </select>
+                </div>
+                <button type="button" class="settings-item settings-item--danger" data-settings-action="reset-all">Reset All Data</button>
+            </div>
+        </main>
+
+
+        <!-- NEW: Slide-out workout menu -->
+        <div id="workout-menu" class="workout-menu">
+            <div class="workout-menu-panel">
+                <div class="workout-menu-header">
+                    <h2>Menu</h2>
+                    <button type="button" id="workout-menu-close" class="workout-menu-close" aria-label="Close menu">×</button>
+                </div>
+                <nav class="workout-menu-nav">
+                    <button type="button" class="workout-menu-link" data-menu-action="home">
+                                            Home
+                                        </button>
+
+                    <button type="button" class="workout-menu-link" data-menu-action="back-to-workout">
+                                            Back to Workout
+                                        </button>
+
+                    <button type="button" class="workout-menu-link" data-menu-action="programs">
+                                            Select Program
+                                        </button>
+
+                    <button type="button" class="workout-menu-link" data-menu-action="history">
+                                            My Past Workouts
+                                        </button>
+
+                    <button type="button" class="workout-menu-link" data-menu-action="profile">
+                                            Edit Profile
+                                        </button>
+
+                    <button type="button" class="workout-menu-link" data-menu-action="equipment-key">
+                                            Equipment Key
+                                        </button>
+
+                    <div class="workout-menu-divider"></div>
+
+                    <button type="button" class="workout-menu-link" data-menu-action="settings">
+                                            Settings
+                                        </button>
+</nav>
+            </div>
+        </div>
+    </div>
+
+  <script src="js/app.js"></script>
+
+  <!-- Bottom-sheet editor for sets -->
+  <div id="set-edit-overlay" class="set-edit-overlay">
+    <div class="set-edit-modal">
+      <h2 class="set-edit-title">Edit Set</h2>
+      <p id="set-edit-exercise" class="set-edit-exercise"></p>
+
+      <label class="field">
+        <span class="field-label" id="set-edit-weight-label">Weight (kg)</span>
+        <input
+          type="number"
+          id="set-edit-weight"
+          inputmode="decimal"
+          min="0"
+          step="0.5"
+          placeholder="e.g. 40"
+        />
+      </label>
+
+      <label class="field">
+        <span class="field-label">Reps</span>
+        <input
+          type="number"
+          id="set-edit-reps"
+          inputmode="numeric"
+          min="0"
+          step="1"
+          placeholder="e.g. 8"
+        />
+      </label>
+
+      <div class="set-edit-actions">
+        <button type="button" id="set-edit-cancel" class="btn btn-outline-teal">
+          Cancel
+        </button>
+        <button type="button" id="set-edit-save" class="btn btn-teal">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cardio Set Edit modal -->
+  <div id="cardio-edit-overlay" class="set-edit-overlay" aria-hidden="true">
+    <div class="set-edit-modal">
+      <h2 class="set-edit-title">Edit Cardio</h2>
+
+      <p id="cardio-edit-exercise" class="set-edit-exercise"></p>
+      <p id="cardio-edit-setlabel" class="set-edit-setlabel"></p>
+
+      <div class="set-edit-row">
+        <label for="cardio-edit-time" class="set-edit-label">Time (minutes)</label>
+        <input id="cardio-edit-time" class="set-edit-input" inputmode="decimal" placeholder="e.g. 20" />
+      </div>
+
+      <div class="set-edit-row">
+        <label for="cardio-edit-incline" class="set-edit-label">Incline / Elevation</label>
+        <input id="cardio-edit-incline" class="set-edit-input" inputmode="decimal" placeholder="e.g. 8" />
+      </div>
+
+      <div class="set-edit-row">
+        <label for="cardio-edit-intensity" class="set-edit-label">Intensity</label>
+        <input id="cardio-edit-intensity" class="set-edit-input" placeholder="e.g. Level 6 / RPE 7" />
+      </div>
+
+      <div class="set-edit-actions">
+        <button type="button" id="cardio-edit-cancel" class="btn btn-outline-teal">Cancel</button>
+        <button type="button" id="cardio-edit-save" class="btn btn-teal">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exercise Info modal -->
+  <div id="exercise-info-overlay" class="set-edit-overlay">
+    <div class="set-edit-modal">
+      <h2 class="set-edit-title">Exercise Info</h2>
+
+      <p id="exercise-info-name" class="set-edit-exercise"></p>
+      <p id="exercise-info-muscles" class="exercise-info-line"></p>
+      <p id="exercise-info-description" class="exercise-info-line exercise-info-line--muted"></p>
+
+      <div class="set-edit-actions">
+        <button type="button" id="exercise-info-close" class="btn btn-teal btn-full">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exercise Edit modal -->
+  <div id="exercise-edit-overlay" class="set-edit-overlay">
+    <div class="set-edit-modal set-edit-modal--exercise-edit">
+      <button type="button" id="exercise-edit-cancel" class="exercise-edit-cancel" aria-label="Cancel">&times;</button>
+      <h2 class="set-edit-title">Edit Exercise</h2>
+
+      <!-- Current exercise name -->
+      <p id="exercise-edit-current" class="set-edit-exercise"></p>
+
+      <!-- Sets selector (Sklar only) -->
+      <div id="exercise-edit-sets-wrap" class="exercise-edit-sets-wrap" style="display:none;">
+        <div class="exercise-edit-sets-label">Sets:</div>
+        <div id="exercise-edit-sets-row" class="exercise-edit-sets-row" aria-label="Sets"></div>
+      </div>
+
+      <!-- Suggested alternatives -->
+      <h3 class="exercise-edit-section-title">Suggested alternatives</h3>
+      <div id="exercise-edit-suggested" class="exercise-edit-list"></div>
+
+      <!-- Category browsing -->
+      <h3 class="exercise-edit-section-title">Browse by category</h3>
+      <div id="exercise-edit-category-row" class="exercise-edit-category-row"></div>
+      <div id="exercise-edit-category-list" class="exercise-edit-list"></div>
+
+      <div class="set-edit-actions">
+        <button type="button" id="exercise-edit-close" class="btn btn-teal btn-full">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
